@@ -1,0 +1,19 @@
+version: "2"
+services:
+  elasticsearch:
+    build: es
+    mem_limit: 4g
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - ./es/esdata/:/usr/share/elasticsearch/data/
+      - ./es/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    environment:
+      - "ES_JAVA_OPTS: -Xmx2048m -Xms2048m"
+  kibana:
+    image: seeruk/docker-kibana-sense:4.6
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200

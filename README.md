@@ -55,6 +55,7 @@ PUT /[index_name]/_settings
 
 ### Sense (Analyzing tool for Elasticsearch)
 ```http://localhost:5601/app/sense```
+In Sense, for a server, set ```http://elasticsearch:9200``` to access the Elasticsearch server.
 
 ### Elastic-HQ
 ```http://localhost:9200/_plugin/hq```

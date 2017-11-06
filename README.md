@@ -1,9 +1,9 @@
 # elasticsearch-docker-composer-for-liferay-7
-This is for setting up docker-composer to test Elasticsearch and Kuromoji against Liferay 7 GA4 / DXP de32 (Elasticsearch 2.4)
+This is for setting up docker-composer to test Elasticsearch and Kuromoji against Liferay 7 GA4 / DXP de32 (Elasticsearch 2.4). **This is ```oraclejdk8``` version. If you are looking for ```openjdk8``` version, please refer ```openjdk8``` branch of this repository.**
 
 ## Required environment
 - Docker 17.06.2-ce >=
-- Java8
+- Java8 (Oracle JDK 8 or Open JDK 8)
 
 ## How to set up
 1. Clone this repository
@@ -19,6 +19,7 @@ This is for setting up docker-composer to test Elasticsearch and Kuromoji agains
 2. Delete folders under ```/es/data```
 3. Run ```docker rm -f `docker ps -qa` ```
 4. Run ```docker rmi `docker images | sed -ne '2,$p' -e 's/ */ /g' | awk '{print $1":"$2}'` ```
+5. If 4 doesn't work, try ```docker rmi $(docker images | awk '/^<none>/ { print $3 }') ```
 
 ## Log files
 under ```/es/logs```
@@ -73,3 +74,4 @@ In Sense, for a server, set ```http://elasticsearch:9200``` to access the Elasti
 
 ### Elastic-HQ
 ```http://localhost:9200/_plugin/hq```
+

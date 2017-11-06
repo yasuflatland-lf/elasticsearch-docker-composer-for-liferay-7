@@ -7,13 +7,12 @@ This is for setting up docker-composer to test Elasticsearch and Kuromoji agains
 
 ## How to set up
 1. Clone this repository
-2. Go to /es/config/elasticsearch.yml and configure network.publish_host to the address where this docker images run. If it's your local machine, should be ```"192.168.1.4"``` e.g.
-3. Go back to the root folder and run ```docker-compose up --build``` or just ```docker-compose up```
-4. Start Liferay DXP / 7
-5. Login as an administrator and navigate to Control Panel -> Configuration -> System Setting -> Basic configuration tab -> Elasticsearch
-6. Change Operation mode to REMOTE and Transport addresses to your IP, something like ```"192.168.1.4:9300"```
-7. Click save and restart Liferay server
-8. Loging as an administrator, navigate to Control Panel -> Configuration -> Server Configuration and run reindex.
+2. Go back to the root folder and run ```docker-compose up --build``` or just ```docker-compose up```
+3. Start Liferay DXP / 7
+4. Login as an administrator and navigate to Control Panel -> Configuration -> System Setting -> Basic configuration tab -> Elasticsearch
+5. Change Operation mode to REMOTE and Transport addresses to your IP according to the console log, '''publish_address {127.0.0.1:9300}'''. In this case, the Transport address should be ```"127.0.0.1:9300"```
+6. Click save and restart Liferay server
+7. Loging as an administrator, navigate to Control Panel -> Configuration -> Server Configuration and run reindex.
 
 ## Initialize set up after change configurations
 1. Stop services with ```docker-compose stop```
@@ -52,6 +51,17 @@ PUT /[index_name]/_settings
 }
 ```
 3. Search / index and you'll see log files under ./es/logs
+
+## Search from query to see how analyzer works.
+1. Navigate to ```http://localhost:5601/app/sense``` and select server (http://elasticsearch:9200)
+2. Paste query below
+```
+GET /[index_name]/_analyze
+{
+  "field": "title_ja_JP",
+  "text":  "東京都清掃局"
+}
+```
 
 ## How to access elasticsearch and tools
 ### Elasticsearch

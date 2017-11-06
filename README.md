@@ -8,7 +8,7 @@ This is for setting up docker-composer to test Elasticsearch and Kuromoji agains
 ## How to set up
 1. Clone this repository
 2. Go to /es/config/elasticsearch.yml and configure network.publish_host to the address where this docker images run. If it's your local machine, should be ```"192.168.1.4"``` e.g.
-3. Go back to the root folder and run ```docker-compose up --build```
+3. Go back to the root folder and run ```docker-compose up --build``` or just ```docker-compose up```
 4. Start Liferay DXP / 7
 5. Login as an administrator and navigate to Control Panel -> Configuration -> System Setting -> Basic configuration tab -> Elasticsearch
 6. Change Operation mode to REMOTE and Transport addresses to your IP, something like ```"192.168.1.4:9300"```
@@ -17,11 +17,15 @@ This is for setting up docker-composer to test Elasticsearch and Kuromoji agains
 
 ## Initialize set up after change configurations
 1. Stop services with ```docker-compose stop```
-2. Run ```docker rm -f `docker ps -qa` ```
-3. Run ```docker rmi `docker images | sed -ne '2,$p' -e 's/ */ /g' | awk '{print $1":"$2}'` ```
+2. Delete folders under ```/es/data```
+3. Run ```docker rm -f `docker ps -qa` ```
+4. Run ```docker rmi `docker images | sed -ne '2,$p' -e 's/ */ /g' | awk '{print $1":"$2}'` ```
 
 ## Log files
-under /es/logs
+under ```/es/logs```
+
+## Data files
+under ```/es/data```
 
 ## How to investigate query of Liferay
 Enable slow query log with low threshold would be the easiest way.

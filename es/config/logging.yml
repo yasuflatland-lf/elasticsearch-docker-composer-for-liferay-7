@@ -26,8 +26,8 @@ logger:
   # discovery
   #discovery: TRACE
 
-  index.search.slowlog: TRACE, index_search_slow_log_file
-  index.indexing.slowlog: TRACE, index_indexing_slow_log_file
+  index.search.slowlog: DEBUG, index_search_slow_log_file
+  index.indexing.slowlog: DEBUG, index_indexing_slow_log_file
 
 additivity:
   index.search.slowlog: false

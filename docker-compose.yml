@@ -7,7 +7,7 @@ services:
       - "9200:9200"
       - "9300:9300"
     volumes:
-      - ./es/esdata/:/usr/share/elasticsearch/data/
+      - ./es/data/:/usr/share/elasticsearch/data/
       - ./es/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
       - ./es/config/logging.yml:/usr/share/elasticsearch/config/logging.yml
       - ./es/logs/:/var/log/elasticsearch/

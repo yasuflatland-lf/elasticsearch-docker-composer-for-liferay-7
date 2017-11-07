@@ -7,7 +7,7 @@ This is for setting up docker-composer to test Elasticsearch and Kuromoji agains
 
 ## How to set up (Oracle JDK, master branch)
 1. Clone this repository
-2. Change the file permission of /es/docker-entrypoint.sh to be executable.
+2. Change the file permission of ```/es/docker-entrypoint.sh``` to executable.
 3. Go back to the root folder and run ```docker-compose up --build``` or just ```docker-compose up```
 4. Start Liferay DXP / 7
 5. Login as an administrator and navigate to Control Panel -> Configuration -> System Setting -> Basic configuration tab -> Elasticsearch

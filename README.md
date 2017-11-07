@@ -5,7 +5,17 @@ This is for setting up docker-composer to test Elasticsearch and Kuromoji agains
 - Docker 17.06.2-ce >=
 - Java8 (Oracle JDK 8 or Open JDK 8)
 
-## How to set up
+## How to set up (Oracle JDK, master branch)
+1. Clone this repository
+2. Change the file permission of /es/docker-entrypoint.sh to be executable.
+3. Go back to the root folder and run ```docker-compose up --build``` or just ```docker-compose up```
+4. Start Liferay DXP / 7
+5. Login as an administrator and navigate to Control Panel -> Configuration -> System Setting -> Basic configuration tab -> Elasticsearch
+6. Change Operation mode to REMOTE and Transport addresses to your IP according to the console log, '''publish_address {127.0.0.1:9300}'''. In this case, the Transport address should be ```"127.0.0.1:9300"```
+7. Click save and restart Liferay server
+8. Loging as an administrator, navigate to Control Panel -> Configuration -> Server Configuration and run reindex.
+
+## How to set up (Open JDK, openjdk8 branch)
 1. Clone this repository
 2. Go back to the root folder and run ```docker-compose up --build``` or just ```docker-compose up```
 3. Start Liferay DXP / 7

@@ -10,6 +10,7 @@ services:
       - ./es/data/:/usr/share/elasticsearch/data/
       - ./es/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
       - ./es/config/logging.yml:/usr/share/elasticsearch/config/logging.yml
+      - ./es/config/userdict_ja.txt:/usr/share/elasticsearch/config/userdict_ja.txt
       - ./es/logs/:/var/log/elasticsearch/
     environment:
       - "ES_JAVA_OPTS: -Xmx2048m -Xms2048m"

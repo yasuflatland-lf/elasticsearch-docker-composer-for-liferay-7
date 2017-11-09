@@ -24,6 +24,9 @@ This is for setting up docker-composer to test Elasticsearch and Kuromoji agains
 6. Click save and restart Liferay server
 7. Loging as an administrator, navigate to Control Panel -> Configuration -> Server Configuration and run reindex.
 
+## Modify user dictionaly
+1. Open /es/config/userdict_ja.txt
+2. Modify contents according to the [user guide](https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis-kuromoji-tokenizer.html)
 ## Initialize set up after change configurations
 1. Stop services with ```docker-compose stop```
 2. Delete folders under ```/es/data```
@@ -84,4 +87,3 @@ In Sense, for a server, set ```http://elasticsearch:9200``` to access the Elasti
 
 ### Elastic-HQ
 ```http://localhost:9200/_plugin/hq```
-

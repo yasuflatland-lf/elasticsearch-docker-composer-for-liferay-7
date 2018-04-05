@@ -1,4 +1,4 @@
-version: "2"
+version: "2.1"
 services:
   elasticsearch:
     build: es
@@ -6,6 +6,10 @@ services:
     ports:
       - "9200:9200"
       - "9300:9300"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
     volumes:
       - ./es/data/:/usr/share/elasticsearch/data/
       - ./es/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
@@ -13,10 +17,17 @@ services:
       - ./es/config/userdict_ja.txt:/usr/share/elasticsearch/config/userdict_ja.txt
       - ./es/logs/:/var/log/elasticsearch/
     environment:
-      - "ES_JAVA_OPTS: -Xmx2048m -Xms2048m"
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=false
+      - xpack.graph.enabled=false
+      - xpack.ml.enabled=false
+      - xpack.monitoring.enabled=true
+      - xpack.watcher.enabled=false
+
   kibana:
-    image: seeruk/docker-kibana-sense:4.6
+    image: docker.elastic.co/kibana/kibana:6.1.4
     ports:
       - "5601:5601"
     environment:
-      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - xpack.security.enabled=false

@@ -7,16 +7,12 @@ RUN addgroup -S elasticsearch && adduser -S -G elasticsearch elasticsearch
 # and bash for "bin/elasticsearch" among others
 RUN apk add --no-cache 'su-exec>=0.2' bash
 
-# https://artifacts.elastic.co/GPG-KEY-elasticsearch
-ENV GPG_KEY 46095ACC8548582C1A2699A9D27D666CD88E42B4
-
-WORKDIR /usr/share/elasticsearch
+WORKDIR /usr/share
 ENV PATH /usr/share/elasticsearch/bin:$PATH
 
-ENV ELASTICSEARCH_VERSION 2.4.6
-ENV ELASTICSEARCH_TARBALL="https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-2.4.6.tar.gz" \
-    ELASTICSEARCH_TARBALL_ASC="https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-2.4.6.tar.gz.asc" \
-    ELASTICSEARCH_TARBALL_SHA1="c3441bef89cd91206edf3cf3bd5c4b62550e60a9"
+ENV ELASTICSEARCH_VERSION 6.1.3
+ENV ELASTICSEARCH_TARBALL="https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-$ELASTICSEARCH_VERSION.tar.gz" \
+    ELASTICSEARCH_TARBALL_SHA512="https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-$ELASTICSEARCH_VERSION.tar.gz.sha512"
 
 RUN set -ex; \
     \
@@ -27,31 +23,25 @@ RUN set -ex; \
         tar \
     ; \
     \
-    wget -O elasticsearch.tar.gz "$ELASTICSEARCH_TARBALL"; \
+    wget -O elasticsearch-$ELASTICSEARCH_VERSION.tar.gz "$ELASTICSEARCH_TARBALL"; \
+    wget -O elasticsearch-$ELASTICSEARCH_VERSION.tar.gz.sha512 "$ELASTICSEARCH_TARBALL_SHA512"; \
     \
-    if [ "$ELASTICSEARCH_TARBALL_SHA1" ]; then \
-        echo "$ELASTICSEARCH_TARBALL_SHA1 *elasticsearch.tar.gz" | sha1sum -c -; \
-    fi; \
+    sha512sum -c elasticsearch-$ELASTICSEARCH_VERSION.tar.gz.sha512; \
     \
-    if [ "$ELASTICSEARCH_TARBALL_ASC" ]; then \
-        wget -O elasticsearch.tar.gz.asc "$ELASTICSEARCH_TARBALL_ASC"; \
-        export GNUPGHOME="$(mktemp -d)"; \
-        gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$GPG_KEY"; \
-        gpg --batch --verify elasticsearch.tar.gz.asc elasticsearch.tar.gz; \
-        rm -rf "$GNUPGHOME" elasticsearch.tar.gz.asc; \
-    fi; \
+    tar -xzvf elasticsearch-$ELASTICSEARCH_VERSION.tar.gz; \
+    rm elasticsearch-$ELASTICSEARCH_VERSION.tar.gz; \
+    rm elasticsearch-$ELASTICSEARCH_VERSION.tar.gz.sha512; \
     \
-    tar -xf elasticsearch.tar.gz --strip-components=1; \
-    rm elasticsearch.tar.gz; \
+    mv -f elasticsearch-$ELASTICSEARCH_VERSION elasticsearch; \
     \
     apk del .fetch-deps; \
     \
     mkdir -p ./plugins; \
     for path in \
-        ./data \
-        ./logs \
-        ./config \
-        ./config/scripts \
+        ./elasticsearch/data \
+        ./elasticsearch/logs \
+        ./elasticsearch/config \
+        ./elasticsearch/config/scripts \
     ; do \
         mkdir -p "$path"; \
         chown -R elasticsearch:elasticsearch "$path"; \
@@ -75,10 +65,12 @@ COPY docker-entrypoint.sh /
 
 EXPOSE 9200 9300
 ENTRYPOINT ["/docker-entrypoint.sh"]
+
+RUN elasticsearch-plugin install --batch x-pack
+
 CMD ["elasticsearch"]
 
-RUN bin/plugin install analysis-kuromoji
-RUN bin/plugin install analysis-icu
-RUN bin/plugin install analysis-smartcn
-RUN bin/plugin install analysis-stempel
-RUN bin/plugin install royrusso/elasticsearch-HQ/v2.0.3
+RUN elasticsearch-plugin install analysis-kuromoji
+RUN elasticsearch-plugin install analysis-icu
+RUN elasticsearch-plugin install analysis-smartcn
+RUN elasticsearch-plugin install analysis-stempel

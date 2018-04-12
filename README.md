@@ -1,5 +1,7 @@
 # elasticsearch-docker-composer-for-liferay-7
-This is for setting up docker-composer to test Elasticsearch and Kuromoji against Liferay 7 GA4 / DXP de32 (Elasticsearch 2.4). **This is ```oraclejdk8``` version. If you are looking for ```openjdk8``` version, please refer ```openjdk8``` branch of this repository.**
+This is for setting up docker-composer to test Elasticsearch and Kuromoji against Liferay 7 GA6 / DXP de42 (Elasticsearch 6.1.3). **The JDK type (OpenJDK / OracleJDK) need to match between Elasticsearch and Liferay because Liferay using binary protocol to communicate with Elasticsearch. Master is ```Oracle jdk8``` version. If you are looking for ```${elasticsearch_version}_openjdk8``` version, please refer ```${elasticsearch_version}_openjdk8``` branch of this repository.**
+
+If you are using lower than Liferay 7 GA6 / DXP de42, please use branch ```2.4_openjdk8``` or ```2.4_oraclejdk8``` depending on what version of JDK type (OpenJDK / OracleJDK) using for Liferay.
 
 ## Required environment
 - Docker 17.06.2-ce >=
@@ -65,6 +67,7 @@ PUT /[index_name]/_settings
 }
 ```
 3. Search / index and you'll see log files under ./es/logs
+you can also change ./es/config/elasticsearch.yml for above settings and run ```docker-compose up --build```
 
 ## Search from query to see how analyzer works.
 1. Navigate to ```http://localhost:5601/app/sense``` and select server (http://elasticsearch:9200)
@@ -81,9 +84,5 @@ GET /[index_name]/_analyze
 ### Elasticsearch
 ```http://localhost:9200```
 
-### Sense (Analyzing tool for Elasticsearch)
-```http://localhost:5601/app/sense```
-In Sense, for a server, set ```http://elasticsearch:9200``` to access the Elasticsearch server.
-
-### Elastic-HQ
-```http://localhost:9200/_plugin/hq```
+### Kibana (Analyzing tool for Elasticsearch)
+```http://localhost:5601```

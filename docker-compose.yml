@@ -1,4 +1,4 @@
-version: "2.1"
+version: "3.8"
 services:
   elasticsearch:
     build: es
@@ -17,7 +17,8 @@ services:
       - ./es/config/userdict_ja.txt:/usr/share/elasticsearch/config/userdict_ja.txt
       - ./es/logs/:/var/log/elasticsearch/
     environment:
-      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+      - "ES_JAVA_OPTS=-Xms2g -Xmx2g"
+      - discovery.type=single-node
       - bootstrap.memory_lock=true
       - xpack.security.enabled=false
       - xpack.graph.enabled=false
@@ -26,8 +27,9 @@ services:
       - xpack.watcher.enabled=false
 
   kibana:
-    image: docker.elastic.co/kibana/kibana:6.1.4
+    image: docker.elastic.co/kibana/kibana:7.11.1
     ports:
       - "5601:5601"
     environment:
       - xpack.security.enabled=false
+      - "ELASTICSEARCH_HOSTS=http://elasticsearch:9200"

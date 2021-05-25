@@ -1,0 +1,35 @@
+{
+	"analysis": {
+        "filter" : {
+            "liferay_readingform" : {
+                "type": "kuromoji_ipadic_neologd_readingform",
+                "use_romaji": "false"
+            }
+        },
+		"analyzer": {
+			"liferay_kuromoji": {
+				"type": "custom",
+				"tokenizer": "liferay_kuromoji_tokenizer",
+                "char_filter": [
+                    "html_strip",
+                    "kuromoji_ipadic_neologd_iteration_mark"
+                ],
+                "filter" : [
+                    "lowercase",
+                    "cjk_width",
+                    "kuromoji_ipadic_neologd_baseform",
+                    "kuromoji_ipadic_neologd_part_of_speech",
+                    "kuromoji_ipadic_neologd_readingform",
+                    "kuromoji_ipadic_neologd_stemmer"
+                ]
+			}
+		},
+		"tokenizer": {
+			"liferay_kuromoji_tokenizer": {
+				"type": "kuromoji_ipadic_neologd_tokenizer",
+				"mode": "search",
+                "user_dictionary": "userdict_ja.txt"
+			}
+		}
+	}
+}

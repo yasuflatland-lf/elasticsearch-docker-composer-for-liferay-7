@@ -7,7 +7,7 @@
             }
         },
 		"analyzer": {
-			"liferay_kuromoji": {
+			"liferay_analyzer_ja": {
 				"type": "custom",
 				"tokenizer": "liferay_kuromoji_tokenizer",
                 "char_filter": [

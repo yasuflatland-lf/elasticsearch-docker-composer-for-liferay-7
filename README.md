@@ -1,18 +1,19 @@
 # elasticsearch-docker-composer-for-liferay-7
 
-This is for setting up docker-composer to test Elasticsearch and Kuromoji against Liferay 7.3 GA1 / DXP 7.3 SP1 (Elasticsearch 7.9.3).
+This is for setting up docker-composer to test Elasticsearch and Kuromoji for Liferay 7.x
 
 ## Required environment
 
-- Docker 3.3.3 >=
+- Docker 4.5.0 >=
 - Java8 or Java11
 
 ## How to set up
 
 1. Clone this repository
 1. Change the file permission of `/es/docker-entrypoint.sh` to executable.
+1. Copy `.env.exampl` and create `.env` in the repository root directory.
 1. Go back to the root folder and run `docker-compose up --build` or just `docker-compose up`
-1. Start Liferay 7.3
+1. Start Liferay 7.x
 1. Login as an administrator and navigate to Control Panel -> Configuration -> System Setting -> Search -> Elasticsearch 7
 1. Check `Production Mode Enabled` true.
 1. Open `index-settings.json` and paste it into `Additional Index Configurations` Text field.

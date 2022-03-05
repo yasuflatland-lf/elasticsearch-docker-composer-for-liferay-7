@@ -1,8 +1,7 @@
-FROM docker.elastic.co/elasticsearch/elasticsearch:7.9.3
+ARG  STACK_VERSION=$STACK_VERSION
+FROM docker.elastic.co/elasticsearch/elasticsearch:$STACK_VERSION
 
-COPY ./elasticsearch-analysis-kuromoji-ipadic-neologd-7.9.3-SNAPSHOT.zip ./
-
-RUN elasticsearch-plugin install file:./elasticsearch-analysis-kuromoji-ipadic-neologd-7.9.3-SNAPSHOT.zip
+RUN elasticsearch-plugin install analysis-kuromoji
 RUN elasticsearch-plugin install analysis-icu
 RUN elasticsearch-plugin install analysis-smartcn
 RUN elasticsearch-plugin install analysis-stempel

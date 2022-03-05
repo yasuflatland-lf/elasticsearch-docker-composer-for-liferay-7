@@ -1,35 +1,145 @@
 {
-	"analysis": {
-        "filter" : {
-            "liferay_readingform" : {
-                "type": "kuromoji_ipadic_neologd_readingform",
-                "use_romaji": "false"
+    "analysis": {
+        "char_filter": {
+            "normalize": {
+                "type": "icu_normalizer",
+                "name": "nfkc",
+                "mode": "compose"
             }
         },
-		"analyzer": {
-			"liferay_analyzer_ja": {
-				"type": "custom",
-				"tokenizer": "liferay_kuromoji_tokenizer",
-                "char_filter": [
-                    "html_strip",
-                    "kuromoji_ipadic_neologd_iteration_mark"
-                ],
-                "filter" : [
-                    "lowercase",
-                    "cjk_width",
-                    "kuromoji_ipadic_neologd_baseform",
-                    "kuromoji_ipadic_neologd_part_of_speech",
-                    "kuromoji_ipadic_neologd_readingform",
-                    "kuromoji_ipadic_neologd_stemmer"
+        "tokenizer": {
+            "kuromoji_tokenizer_ja": {
+                "mode": "search",
+                "type": "kuromoji_tokenizer",
+                "discard_compound_token": true
+            },
+            "ngram_tokenizer_ja": {
+                "type": "ngram",
+                "min_gram": 2,
+                "max_gram": 2,
+                "token_chars": [
+                    "letter",
+                    "digit"
                 ]
-			}
-		},
-		"tokenizer": {
-			"liferay_kuromoji_tokenizer": {
-				"type": "kuromoji_ipadic_neologd_tokenizer",
-				"mode": "search",
-                "user_dictionary": "userdict_ja.txt"
-			}
-		}
-	}
+            }
+        },
+        "analyzer": {
+            "keyword_lowercase": {
+                "filter": "lowercase",
+                "tokenizer": "keyword"
+            },
+            "liferay_analyzer_en": {
+                "filter": [
+                    "english_possessive_stemmer",
+                    "lowercase",
+                    "liferay_filter_synonym_en",
+                    "english_stop",
+                    "english_stemmer"
+                ],
+                "tokenizer": "standard"
+            },
+            "liferay_analyzer_es": {
+                "filter": [
+                    "lowercase",
+                    "spanish_stop",
+                    "liferay_filter_synonym_es",
+                    "spanish_stemmer"
+                ],
+                "tokenizer": "standard"
+            },
+            "liferay_analyzer_ja": {
+                "char_filter": [
+                    "normalize"
+                ],
+                "tokenizer": "kuromoji_tokenizer_ja",
+                "filter": [
+                    "kuromoji_baseform",
+                    "kuromoji_part_of_speech",
+                    "liferay_filter_synonym_ja",
+                    "cjk_width",
+                    "ja_stop",
+                    "kuromoji_stemmer",
+                    "lowercase"
+                ]
+            },
+            "liferay_analyzer_search_ja": {
+                "char_filter": [
+                    "normalize"
+                ],
+                "tokenizer": "kuromoji_tokenizer_ja",
+                "filter": [
+                    "kuromoji_baseform",
+                    "kuromoji_part_of_speech",
+                    "liferay_filter_synonym_ja",
+                    "cjk_width",
+                    "ja_stop",
+                    "kuromoji_stemmer",
+                    "lowercase"
+                ]
+            },
+            "liferay_analyzer_ngram_ja": {
+                "type": "custom",
+                "char_filter": [
+                    "normalize"
+                ],
+                "tokenizer": "ngram_tokenizer_ja",
+                "filter": [
+                    "lowercase"
+                ]
+            },
+            "liferay_analyzer_search_ngram_ja": {
+                "type": "custom",
+                "char_filter": [
+                    "normalize"
+                ],
+                "tokenizer": "ngram_tokenizer_ja",
+                "filter": [
+                    "liferay_filter_synonym_ja",
+                    "lowercase"
+                ]
+            }
+        },
+        "filter": {
+            "english_possessive_stemmer": {
+                "language": "possessive_english",
+                "type": "stemmer"
+            },
+            "english_stemmer": {
+                "language": "english",
+                "type": "stemmer"
+            },
+            "english_stop": {
+                "stopwords": "_english_",
+                "type": "stop"
+            },
+            "liferay_filter_synonym_en": {
+                "lenient": true,
+                "synonyms": [],
+                "type": "synonym_graph"
+            },
+            "liferay_filter_synonym_es": {
+                "lenient": true,
+                "synonyms": [],
+                "type": "synonym_graph"
+            },
+            "liferay_filter_synonym_index_ja": {
+                "lenient": true,
+                "synonyms": [],
+                "type": "synonym_graph"
+            },
+            "liferay_filter_synonym_ja": {
+                "lenient": true,
+                "synonyms": [],
+                "type": "synonym_graph"
+            },
+            "spanish_stemmer": {
+                "language": "light_spanish",
+                "type": "stemmer"
+            },
+            "spanish_stop": {
+                "stopwords": "_spanish_",
+                "type": "stop"
+            }
+        }
+    }
 }

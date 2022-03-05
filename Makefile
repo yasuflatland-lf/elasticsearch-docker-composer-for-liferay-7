@@ -1,11 +1,22 @@
-# Cleanup database
 .PHONY: clean
-clean: ## Cleanup Environment
+clean: ## Cleanup index
 	rm -fR ./es/data
+	mkdir ./es/data
+
+.PHONY: destroy
+destroy: ## Destroy all environment including IntelliJ metadata and libraries
+	docker-compose down --rmi all --volumes --remove-orphans; \
+	rm -fR ./es/data
+	rm -fR .gradle
+	rm -fR .idea
 
 .PHONY: run
-run: ## Run docker-compose
-	docker-compose up --build
+run: ## Shorthand of running docker images
+	docker-compose up --build --remove-orphans
+
+.PHONY: down
+down: ## Stop Docker
+	docker-compose down
 
 .PHONY: help
 help: ## Display this help screen

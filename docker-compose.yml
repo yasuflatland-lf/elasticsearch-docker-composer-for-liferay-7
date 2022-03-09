@@ -59,7 +59,11 @@ services:
         - STACK_VERSION=${STACK_VERSION}
     volumes:
       - certs:/usr/share/elasticsearch/config/certs
-      - esdata:/usr/share/elasticsearch/data
+      - ./es/data:/usr/share/elasticsearch/data
+      - ./es/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ./es/config/logging.yml:/usr/share/elasticsearch/config/logging.yml
+      - ./es/config/userdict_ja.txt:/usr/share/elasticsearch/config/userdict_ja.txt
+      - ./es/logs/:/var/log/elasticsearch/
     ports:
       - ${ES_PORT}:9200
     environment:
@@ -124,8 +128,6 @@ services:
 
 volumes:
   certs:
-    driver: local
-  esdata:
     driver: local
   kibanadata:
     driver: local

@@ -6,7 +6,7 @@ clean: ## Cleanup index
 .PHONY: destroy
 destroy: ## Destroy all environment including IntelliJ metadata and libraries
 	docker-compose down --rmi all --volumes --remove-orphans; \
-	rm -fR ./es/data
+	rm -fR ./es/data ./es/logs
 	rm -fR .gradle
 	rm -fR .idea
 

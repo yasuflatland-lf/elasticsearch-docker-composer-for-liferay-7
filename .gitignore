@@ -1,3 +1,6 @@
 es/logs
 es/data
 .env
+.idea
+es/certs
+es/kibanadata

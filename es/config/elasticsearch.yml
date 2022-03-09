@@ -55,46 +55,6 @@ network.host: 0.0.0.0
 network.bind_host: 0.0.0.0
 # Change IP below to appropriate IP for your environment
 network.publish_host: _lo:ipv4_
-#
-# Set a custom port for HTTP:
-#
-# http.port: 9200
-#
-# For more information, see the documentation at:
-# <http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-network.html>
-#
-# --------------------------------- Discovery ----------------------------------
-#
-# Pass an initial list of hosts to perform discovery when new node is started:
-# The default list of hosts is ["127.0.0.1", "[::1]"]
-#
-# discovery.zen.ping.unicast.hosts: ["127.0.0.1", "[::1]","elasticsearch"]
-#
-# Prevent the "split brain" by configuring the majority of nodes (total number of nodes / 2 + 1):
-#
-discovery.zen.minimum_master_nodes: 1
-#
-# For more information, see the documentation at:
-# <http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-discovery.html>
-#
-# ---------------------------------- Gateway -----------------------------------
-#
-# Block initial recovery after a full cluster restart until N nodes are started:
-#
-# gateway.recover_after_nodes: 3
-#
-# For more information, see the documentation at:
-# <http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-gateway.html>
-#
-# ---------------------------------- Various -----------------------------------
-#
-# Disable starting multiple nodes on a single system:
-#
-# node.max_local_storage_nodes: 1
-#
-# Require explicit names when deleting indices:
-#
-# action.destructive_requires_name: true
 
 # For debug
 # Search Slow log
@@ -115,5 +75,3 @@ discovery.zen.minimum_master_nodes: 1
 # index.indexing.slowlog.threshold.index.trace: 500ms
 # index.indexing.slowlog.level: info
 # index.indexing.slowlog.source: 1000
-
-xpack.security.enabled: false
